@@ -1,10 +1,10 @@
 
 function Discover-Hosts {
     param(
-        [string]$startIP = "192.168.1.1"
-        [string]$endIP = "192.168.1.255"
+        [string]$startIP = "10.180.209.1",
+        [string]$endIP = "10.180.209.255"
     )
-}
+
 
 
 # Convert IP addresses to integer for easy loop
@@ -25,7 +25,11 @@ for ($ip = $ipStart; $ip -le $ipEnd; $ip++) {
         # Ping the current IP
         $ping = New-Object System.Net.NetworkInformation.Ping
         $result = $ping.Send($currentIP, 100) # 100 ms timeout for each ping
+        Write-Output "Scanning: $currentIP"
         if ($result.Status -eq "Success") {
             Write-Output "Host alive: $currentIP"
         }
     }
+}
+
+Discover-Hosts
